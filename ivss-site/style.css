@@ -514,7 +514,7 @@ main {
     max-width: 500px;
     margin: 0 auto;
     color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0);
 }
 
 .bank-card h2 {
