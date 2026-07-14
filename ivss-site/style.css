@@ -507,7 +507,7 @@ main {
 
 /* Карточка банковской формы */
 .bank-card {
-    background-color: rgba(30, 30, 30, 0.95);
+    background-color: #1e1e1e;
     padding: 40px;
     border-radius: 12px;
     width: 100%;
