@@ -1,0 +1,899 @@
+/* ============================================================
+   IVSS - ГЛАВНЫЙ ФАЙЛ СТИЛЕЙ
+   ============================================================
+   Этот файл содержит все стили для всех страниц сайта.
+   Шапка и подвал одинаковы на всех страницах.
+   Все комментарии на русском для удобства редактирования.
+   ============================================================ */
+
+
+/* ==================== БАЗОВЫЕ НАСТРОЙКИ ==================== */
+
+/* Сброс отступов и полей для всех элементов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили для всего тела документа */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== ШАПКА (HEADER) ==================== */
+/* Шапка одинаковая на всех страницах - см. фото 1 */
+
+/* Верхняя голубая полоса шапки с правительственной информацией */
+.header-top {
+    background-color: #1a5a9a;
+    color: white;
+    padding: 8px 0;
+    font-size: 12px;
+}
+
+/* Контейнер для верхней полосы - ограничивает ширину */
+.header-top .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Левая часть верхней полосы - флаг и название правительства */
+.header-top-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Эмодзи флага Венесуэлы (можно заменить на картинку) */
+.header-top-left .flag {
+    display: inline-block;
+    width: 24px;
+    height: 16px;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/Flag_of_Venezuela.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 0;
+}
+
+/* Текст правительства */
+.header-top-left span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Правая часть верхней полосы - название института */
+.header-top-right {
+    text-align: right;
+    line-height: 1.4;
+}
+
+/* Главная часть шапки с логотипом и навигацией */
+.header-main {
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+    padding: 15px 0;
+    border-bottom: 3px solid #c41e1e;
+}
+
+/* Контейнер для главной части шапки */
+.header-main .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Область логотипа */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Круглый логотип IVSS */
+.logo-circle {
+    width: 60px;
+    height: 60px;
+    background: url("https://upload.wikimedia.org/wikipedia/commons/3/3c/IVSS_%28rojo%29.svg") center/contain no-repeat;
+    border-radius: 50%; /* убери, если не нужна круглая обрезка */
+    display: block;
+}
+
+/* Текст рядом с логотипом */
+.logo-text h1 {
+    font-size: 20px;
+    color: #c41e1e;
+    font-weight: 700;
+}
+
+.logo-text p {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* Область поиска и иконок */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* Поле поиска */
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    padding: 6px 12px;
+    border: 1px solid #999;
+    border-radius: 4px 0 0 4px;
+    width: 200px;
+    font-size: 13px;
+}
+
+.search-box button {
+    padding: 6px 12px;
+    background-color: #1a5a9a;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Социальные иконки */
+.social-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #1a5a9a;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Навигационное меню */
+.nav-menu {
+    background-color: #d5d5d5;
+    border-bottom: 1px solid #bbb;
+}
+
+.nav-menu .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu ul li a {
+    display: block;
+    padding: 12px 25px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    background-color: #c41e1e;
+    color: white;
+}
+
+
+/* ==================== ОСНОВНОЕ СОДЕРЖИМОЕ ==================== */
+
+/* Основная область контента - растягивается на всё доступное пространство */
+main {
+    flex: 1;
+    position: relative;
+}
+
+/* ==================== СТРАНИЦА ЛОГИНА (index.html) ==================== */
+
+/* Фоновая секция для страницы логина с полупрозрачным изображением */
+.login-section {
+    min-height: calc(100vh - 300px);
+    /* Фоновое изображение рук, держащихся вместе */
+    background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;  
+}
+
+/* Полупрозрачный тёмный оверлей поверх фона */
+.login-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: none; /* ← ДОБАВИТЬ — клики проходят сквозь оверлей */
+    z-index: 0;
+}
+
+/* Карточка формы логина - стиль как на фото 3 */
+.login-card {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Заголовок формы логина */
+.login-card h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Подзаголовок формы */
+.login-card .subtitle {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* ==================== ОБЩИЕ СТИЛИ ФОРМ ==================== */
+
+/* Группа полей формы (label + input) */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Подпись к полю ввода */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #ddd;
+}
+
+/* Поле ввода текста */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Подсветка поля при фокусе */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #f0c040;
+}
+
+/* Стиль для выпадающего списка (select) */
+.form-group select {
+    -webkit-appearance: none;  
+    -moz-appearance: none;  
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+    min-height: 48px;  
+}
+
+/* Опции в выпадающем списке */
+.form-group select option {
+    background-color: #2a2a2a;
+    color: white;
+}
+
+/* ==================== ЧЕКБОКС ==================== */
+
+/* Контейнер для чекбокса с текстом */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+/* Сам чекбокс */
+.checkbox-group input[type="checkbox"] {
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #c41e1e;
+}
+
+/* Текст рядом с чекбоксом */
+.checkbox-group label {
+    font-size: 12px;
+    color: #bbb;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+/* ==================== КНОПКИ ==================== */
+
+/* Основная жёлтая кнопка (стиль как на фото 3) */
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background-color: #d4a017;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* Кнопка при наведении */
+.btn-primary:hover:not(:disabled) {
+    background-color: #e5b12a;
+}
+
+/* Отключённая кнопка */
+.btn-primary:disabled {
+    background-color: #888;
+    color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Красная кнопка для действий */
+.btn-danger {
+    width: 100%;
+    padding: 14px;
+    background-color: #c41e1e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background-color: #d83030;
+}
+
+/* Кнопка в строчном отображении */
+.btn-inline {
+    width: auto;
+    padding: 14px 40px;
+}
+
+/* ==================== СТРАНИЦА 2 - ПРИВЕТСТВИЕ ==================== */
+
+/* Светлая секция контента */
+.content-section {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Карточка приветствия */
+.welcome-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Имя пользователя */
+.welcome-card .user-name {
+    font-size: 24px;
+    color: #1a5a9a;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Текст приветствия */
+.welcome-card .welcome-text {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+/* Блок с информацией о выплате */
+.payout-info {
+    background-color: #e8f4e8;
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 25px 0;
+}
+
+.payout-info .payout-amount {
+    font-size: 32px;
+    color: #2e7d32;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.payout-info .payout-label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* ==================== СТРАНИЦЫ ОШИБОК (3, 5) ==================== */
+
+/* Карточка ошибки */
+.error-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Иконка ошибки */
+.error-icon {
+    font-size: 60px;
+    color: #c41e1e;
+    margin-bottom: 20px;
+}
+
+/* Заголовок ошибки */
+.error-card h2 {
+    font-size: 26px;
+    color: #c41e1e;
+    margin-bottom: 20px;
+}
+
+/* Текст ошибки/статья */
+.error-text,
+.article-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    text-align: left;
+    margin: 20px 0;
+}
+
+/* ==================== СТРАНИЦА 4 - БАНКОВСКИЕ ДАННЫЕ ==================== */
+
+/* Карточка банковской формы */
+.bank-card {
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.bank-card h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+/* ==================== СТРАНИЦА 6 - ПОДТВЕРЖДЕНИЕ ==================== */
+
+/* Карточка подтверждения */
+.confirm-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.confirm-card h2 {
+    font-size: 22px;
+    color: #1a5a9a;
+    margin-bottom: 20px;
+}
+
+/* ==================== СТРАНИЦА 7 - СЧЁТ НЕ ПОДХОДИТ ==================== */
+
+.warning-icon {
+    font-size: 60px;
+    color: #ff9800;
+    margin-bottom: 20px;
+}
+
+/* ==================== СТРАНИЦА 8 - ДОГОВОР ==================== */
+
+/* Карточка договора */
+.contract-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contract-card h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Блок PDF файла */
+.pdf-file {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    margin: 25px 0;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.pdf-file:hover {
+    border-color: #c41e1e;
+}
+
+.pdf-file .pdf-icon {
+    font-size: 40px;
+    color: #c41e1e;
+}
+
+.pdf-file .pdf-name {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Скрытый input для загрузки файлов */
+.file-input-hidden {
+    display: none;
+}
+
+/* Область имитации загрузки */
+.upload-simulation {
+    margin-top: 20px;
+}
+
+/* Полоса прогресса загрузки */
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+    display: none;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+/* Текст статуса загрузки */
+.upload-status {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* ==================== МОДАЛЬНОЕ ОКНО ==================== */
+
+/* Затемнённый фон модального окна */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Показать модальное окно */
+.modal-overlay.active {
+    display: flex;
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Анимация появления модального окна */
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Иконка успеха в модальном окне */
+.modal-icon {
+    font-size: 50px;
+    color: #4caf50;
+    margin-bottom: 15px;
+}
+
+/* Заголовок модального окна */
+.modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Текст модального окна */
+.modal-content p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+
+/* ==================== ПОДВАЛ (FOOTER) ==================== */
+/* Подвал одинаковый на всех страницах - см. фото 2 */
+
+/* Основной подвал */
+footer {
+    background-color: #e0e0e0;
+    border-top: 3px solid #c41e1e;
+}
+
+/* Секция "GOBIERNO EN LÍNEA" */
+.footer-gobierno {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.footer-gobierno h3 {
+    color: #c41e1e;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+/* Ряд логотипов в подвале */
+.footer-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Отдельный логотип в подвале */
+.footer-logo-item {
+    width: 120px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.logo-gob {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8hn_B6V9yGm1GAKjSfbKqCm3_XO6oI61A8vjslJlVWeMVMXjHDbDnmOI&s=10");
+}
+
+.logo-inces {
+    background-image: url("https://seeklogo.com/images/I/inces-logo-212C1A2E7F-seeklogo.com.png");
+}
+
+.logo-incret {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2OEKmHN_O0YnLw5kEk6dxP-e-vrXrt7V9XqLhKBWR9EPrZ0oWr5Nr2Sc&s=10");
+}
+
+.logo-inpsasel {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGF1FSu8t-iLv9qvO1NFkG5eLsKWzLI2ySE5-2zt19ZA&s=10");
+}
+
+.logo-ivss {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFXlCedvw_aQBTxh7-ZnW7Vgi5UIriNti2lkIekXwBDg&s=10");
+}
+
+/* Нижняя часть подвала */
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    background-color: #d0d0d0;
+}
+
+.footer-bottom h4 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.footer-bottom p {
+    font-size: 13px;
+    color: #777;
+}
+
+
+/* ==================== АДАПТИВНОСТЬ (МОБИЛЬНЫЕ УСТРОЙСТВА) ==================== */
+
+@media (max-width: 768px) {
+    .header-top .container {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .header-main .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .header-right {
+        align-items: center;
+    }
+
+    .nav-menu ul {
+        flex-wrap: wrap;
+    }
+
+    .nav-menu ul li a {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .login-card,
+    .bank-card {
+        margin: 20px;
+        padding: 25px;
+    }
+
+    .content-section {
+        padding: 20px 15px;
+    }
+
+    .welcome-card,
+    .error-card,
+    .confirm-card,
+    .contract-card {
+        padding: 25px;
+    }
+}
+/* ============================================
+   УБИРАЕМ "МАСКУ" — делаем цвета сплошными
+   ============================================ */
+
+/* 1. Форма: сплошной тёмный цвет вместо полупрозрачного */
+.bank-card {
+    background-color: #1e1e1e; /* Было rgba(30,30,30,0.95) */
+    /* opacity и rgba убраны — теперь форма плотная */
+}
+
+/* 2. Кнопка disabled: сплошной серый вместо прозрачного */
+.bank-card .btn-primary:disabled {
+    background-color: #666;
+    color: #ccc;
+    opacity: 1; /* Убираем полупрозрачность */
+    cursor: not-allowed;
+}
+
+/* 3. (Опционально) Ослабляем оверлей фона, чтобы страница 
+   не выглядела в "дымке". Если хотите оставить тёмный фон — 
+   закомментируйте этот блок */
+.login-section::before {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+/* ============================================
+   ЯРКОСТЬ: светлый текст, золотая кнопка
+   ============================================ */
+
+/* Все светлые надписи — чистый белый */
+.bank-card h2,
+.bank-card .subtitle,
+.bank-card .form-group label,
+.bank-card .checkbox-group label {
+    color: #ffffff !important;
+}
+
+/* Кнопка — яркий янтарный */
+.bank-card .btn-primary {
+    background-color: #ffc107 !important;
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.35) !important;
+}
+
+.bank-card .btn-primary:hover:not(:disabled) {
+    background-color: #ffdb4d !important;
+    box-shadow: 0 6px 20px rgba(255, 219, 77, 0.5) !important;
+}
+
+/* Отключённая кнопка — без прозрачности */
+.bank-card .btn-primary:disabled {
+    background-color: #555 !important;
+    color: #bbb !important;
+    opacity: 1 !important;
+    cursor: not-allowed;
+}
+
+/* Галочка — ТОЧНО такой же цвет как кнопка */
+.bank-card .checkbox-group input[type="checkbox"] {
+    accent-color: #ffc107 !important;
+}

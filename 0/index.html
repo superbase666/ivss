@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ============================================================ -->
+    <!-- МЕТАДАННЫЕ СТРАНИЦЫ                                          -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <!-- Адаптивность для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Заголовок страницы во вкладке браузера -->
+    <title>IVSS - Iniciar Sesión</title>
+    <!-- Подключение файла со стилями -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- ШАПКА (HEADER) - ОДИНАКОВАЯ НА ВСЕХ СТРАНИЦАХ               -->
+    <!-- См. фото 1 для визуального примера                            -->
+    <!-- ============================================================ -->
+    <header>
+        <!-- Верхняя голубая полоса с информацией о правительстве -->
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-left">
+                    <!-- Флаг Венесуэлы -->
+                    <span class="flag">&#127466;&#127482;</span>
+                    <span>Gobierno Bolivariano de Venezuela</span>
+                </div>
+                <div class="header-top-right">
+                    <div>Ministerio del Poder Popular para el Proceso Social de Trabajo</div>
+                    <div>Instituto Venezolano de los Seguros Sociales</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главная часть шапки с логотипом, поиском и меню -->
+        <div class="header-main">
+            <div class="container">
+                <!-- Левая часть: логотип -->
+                <div class="logo-area">
+                    <div class="logo-circle"></div>
+                    <div class="logo-text">
+                        <h1>IVSS</h1>
+                        <p>Instituto Venezolano de los Seguros Sociales</p>
+                    </div>
+                </div>
+                <!-- Правая часть: поиск и иконки -->
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar" aria-label="Buscar">
+                        <button type="button" aria-label="Buscar">&#128269;</button>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter">&#120143;</a>
+                        <a href="#" aria-label="Facebook">&#120144;</a>
+                        <a href="#" aria-label="Instagram">&#120145;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигационное меню -->
+        <nav class="nav-menu">
+            <div class="container">
+                <ul>
+                    <!-- Пункты меню -->
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">IVSS</a></li>
+                    <li><a href="#">Ciudadanos</a></li>
+                    <li><a href="#">Empleadores</a></li>
+                    <li><a href="#">Pensionados</a></li>
+                    <li><a href="#">Localización</a></li>
+                    <li><a href="#">Noticias</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ==================== КОНЕЦ ШАПКИ ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ СТРАНИЦЫ                                -->
+    <!-- ============================================================ -->
+    <main>
+        <!-- Секция логина с полупрозрачным фоновым изображением -->
+        <section class="login-section">
+            <!-- Карточка формы логина -->
+            <div class="login-card">
+                <!-- Заголовок формы -->
+                <h2>&#161;Bienvenido&#33;</h2>
+                <!-- Подзаголовок с инструкцией -->
+                <p class="subtitle">
+                    Para acceder al sistema de beneficios del IVSS, ingrese su nombre completo y contraseña.
+                </p>
+
+                <!-- Форма логина -->
+                <form onsubmit="return handleLogin(event)">
+                    <!-- Поле: Полное имя -->
+                    <div class="form-group">
+                        <label for="fullName">Nombre completo</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Ingrese su nombre completo"
+                            required
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <!-- Поле: Пароль -->
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Ingrese su contraseña"
+                            required
+                            autocomplete="current-password"
+                        >
+                    </div>
+
+                    <!-- Чекбокс согласия на обработку данных -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeCheckbox" name="agreeCheckbox">
+                        <label for="agreeCheckbox">
+                            Confirmo la exactitud de los datos ingresados y acepto su procesamiento de acuerdo con la política de privacidad.
+                        </label>
+                    </div>
+
+                    <!-- Кнопка начала сессии (изначально отключена) -->
+                    <button type="submit" id="submitBtn" class="btn-primary" disabled>
+                        Iniciar Sesi&oacute;n
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <!-- ==================== КОНЕЦ ОСНОВНОГО СОДЕРЖИМОГО ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ПОДВАЛ (FOOTER) - ОДИНАКОВЫЙ НА ВСЕХ СТРАНИЦАХ              -->
+    <!-- См. фото 2 для визуального примера                            -->
+    <!-- ============================================================ -->
+    <footer>
+        <!-- Секция "GOBIERNO EN LÍNEA" с логотипами -->
+        <div class="footer-gobierno">
+            <h3>GOBIERNO EN L&Iacute;NEA</h3>
+            <div class="footer-logos">
+                <!-- Логотипы правительственных организаций -->
+                <div class="footer-logo-item logo-gob"></div>
+                <div class="footer-logo-item logo-inces"></div>
+                <div class="footer-logo-item logo-incret"></div>
+                <div class="footer-logo-item logo-inpsasel"></div>
+                <div class="footer-logo-item logo-ivss"></div>
+            </div>
+        </div>
+
+        <!-- Нижняя часть подвала -->
+        <div class="footer-bottom">
+            <h4>LA SEGURIDAD SOCIAL ES TU DERECHO</h4>
+            <p>Instituto Venezolano de los Seguros Sociales (IVSS) 2015</p>
+        </div>
+    </footer>
+    <!-- ==================== КОНЕЦ ПОДВАЛА ==================== -->
+
+    <!-- Подключение JavaScript файла -->
+    <script src="script.js"></script>
+</body>
+</html>
