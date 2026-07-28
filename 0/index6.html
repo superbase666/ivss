@@ -15,7 +15,6 @@
     <!-- ШАПКА (HEADER) - ОДИНАКОВАЯ НА ВСЕХ СТРАНИЦАХ               -->
     <!-- ============================================================ -->
     <header>
-          <title>Header</title>
   <style>
     * {
       margin: 0;
@@ -35,6 +34,7 @@
       background: #fff;
       border-bottom: 1px solid #e0e0e0;
       gap: 0;
+      flex-wrap: wrap;
     }
 
     .gov-header__logo {
@@ -131,6 +131,47 @@
     .gov-header__institute .line2 span {
       color: #777;
       font-weight: 400;
+    }
+
+    /* ========== MOBILE — только лого + институт ========== */
+    @media (max-width: 767px) {
+      .gov-header {
+        padding: 10px 16px;
+        gap: 12px;
+        flex-wrap: nowrap;
+      }
+
+      .gov-header__logo img {
+        height: 44px;
+      }
+
+      /* Скрываем всё лишнее */
+      .gov-header__logo-text,
+      .gov-header__ministry,
+      .gov-header__divider {
+        display: none !important;
+      }
+
+      /* Показываем и стилизуем институт */
+      .gov-header__institute {
+        display: flex !important;
+      }
+
+      .gov-header__institute .line1 {
+        font-size: 12px;
+        color: #777;
+      }
+
+      .gov-header__institute .line2 {
+        font-size: 15px;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .gov-header__institute .line2 span {
+        color: #777;
+        font-weight: 400;
+      }
     }
   </style>
 </head>
