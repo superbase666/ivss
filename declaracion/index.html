@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Declaración IVSS — Firma Digital</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f5f5f5; color: #222; font-size: 16px;
+  }
+  .container {
+    max-width: 480px; margin: 0 auto; background: #fff;
+    padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  h1 { font-size: 1.25rem; margin: 0 0 20px; text-align: center; color: #1a1a1a; }
+  label { display: block; margin: 18px 0 6px; font-weight: 600; font-size: 0.9rem; color: #444; }
+  input[type="text"], input[type="date"], input[type="file"] {
+    width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; -webkit-appearance: none;
+  }
+  input[type="file"] { padding: 8px; background: #fafafa; }
+  .signature-box {
+    margin-top: 8px; border: 2px dashed #ccc; border-radius: 8px;
+    background: #fafafa; position: relative; width: 100%; height: 160px; overflow: hidden;
+  }
+  canvas#signature-pad { width: 100%; height: 100%; display: block; touch-action: none; }
+  .btn {
+    width: 100%; padding: 14px; margin-top: 12px; border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn:active { opacity: 0.85; transform: scale(0.98); }
+  .btn-primary { background: #0056b3; color: #fff; margin-top: 24px; }
+  .btn-secondary { background: #e0e0e0; color: #333; }
+  .btn-success { background: #198754; color: #fff; }
+  .btn-outline { background: #fff; color: #0056b3; border: 2px solid #0056b3; }
+  .actions { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .hidden { display: none !important; }
+  #preview-area { margin-top: 16px; text-align: center; }
+  #preview-area img { max-width: 100%; border: 1px solid #ddd; border-radius: 8px; }
+  .hint { font-size: 0.8rem; color: #888; margin-top: 4px; line-height: 1.3; }
+  .error { color: #c00; font-size: 0.85rem; margin-top: 6px; display: none; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Declaración de Solicitud y Consentimiento</h1>
+  
+  <div id="form-section">
+    <label for="nombre">Nombre completo del solicitante</label>
+    <input type="text" id="nombre" placeholder="Ej: María Elena López" autocomplete="name">
+    
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha">
+    
+    <label for="cedula">Número de cédula de identidad</label>
+    <input type="text" id="cedula" placeholder="Ej: V-12345678" autocomplete="off">
+    
+    <label>Firma del solicitante <span style="font-weight:normal;color:#666">(dibuje con el dedo o el mouse)</span></label>
+    <div class="signature-box">
+      <canvas id="signature-pad"></canvas>
+    </div>
+    <button type="button" class="btn btn-secondary" onclick="clearSignature()" style="margin-top:8px">Borrar firma</button>
+    
+    <label for="pdf-template">Plantilla PDF</label>
+    <input type="file" id="pdf-template" accept="application/pdf">
+    <p class="hint">
+      Si no selecciona archivo, el sitio buscará <strong>Declaración.pdf</strong>.
+    </p>
+    
+    <div id="error-msg" class="error"></div>
+    <button type="button" class="btn btn-primary" onclick="generateDocuments()">Generar documento firmado</button>
+  </div>
+  
+  <div id="result-section" class="hidden">
+    <p style="text-align:center;color:#444;margin-bottom:12px;font-weight:500">Documento generado correctamente</p>
+    <div id="preview-area"></div>
+    <div class="actions">
+      <button type="button" class="btn btn-success" onclick="downloadPDF()">📄 Descargar PDF</button>
+      <button type="button" class="btn btn-outline" onclick="downloadJPG()">🖼️ Descargar JPG</button>
+      <button type="button" class="btn btn-secondary" onclick="resetForm()">Nuevo documento</button>
+    </div>
+  </div>
+</div>
+
+<!-- pdf-lib: создание/редактирование PDF -->
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<!-- pdf.js: рендеринг PDF в canvas (для JPG) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+// ============================================
+// CONFIGURACIÓN — КООРДИНАТЫ ИЗ ТВОЕГО PDF
+// ============================================
+const CONFIG = {
+  page: {
+    width: 595.30,
+    height: 841.89
+  },
+  
+  color: { r: 0, g: 0, b: 0 },
+  
+  // Координаты текстовых полей (x, y, size) — всё в PDF-пунктах (pt)
+  // y в pdf-lib отсчитывается от НИЖНЕГО левого угла страницы
+  textFields: {
+    // --- Верхняя часть формы ---
+    fechaHeader:  { x: 94.45,  y: 654.78, size: 12 },
+    nombre:       { x: 228.64, y: 633.92, size: 12 },
+    cedula:       { x: 223.71, y: 612.32, size: 12 },
+    
+    // --- Нижняя часть (подписной блок) ---
+    nombreFooter: { x: 155.45, y: 84.62,  size: 12 },
+    fechaFooter:  { x: 94.45,  y: 61.74,  size: 12 }
+  },
+  
+  // Область для вставки изображения подписи
+  signature: {
+    x: 169.12,
+    y: 117.46,
+    width: 185.62,
+    height: 22
+  },
+  
+  defaultTemplate: './Declaración.pdf'
+};
+
+// ============================================
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+// ============================================
+let pdfBytes = null;
+let jpgDataUrl = null;
+let templateBytes = null;
+
+// ============================================
+// CANVAS ДЛЯ ПОДПИСИ
+// ============================================
+const sigCanvas = document.getElementById('signature-pad');
+const sigCtx = sigCanvas.getContext('2d');
+
+function resizeSigCanvas() {
+  const rect = sigCanvas.parentElement.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  sigCanvas.width = rect.width * dpr;
+  sigCanvas.height = rect.height * dpr;
+  sigCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  sigCtx.lineCap = 'round';
+  sigCtx.lineJoin = 'round';
+  sigCtx.lineWidth = 2;
+  sigCtx.strokeStyle = '#000';
+}
+window.addEventListener('resize', resizeSigCanvas);
+resizeSigCanvas();
+
+let isDrawing = false;
+let lastX = 0, lastY = 0;
+
+function getPointerPos(e) {
+  const rect = sigCanvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function startDraw(e) {
+  e.preventDefault();
+  isDrawing = true;
+  const pos = getPointerPos(e);
+  lastX = pos.x; lastY = pos.y;
+}
+function moveDraw(e) {
+  if (!isDrawing) return;
+  e.preventDefault();
+  const pos = getPointerPos(e);
+  sigCtx.beginPath();
+  sigCtx.moveTo(lastX, lastY);
+  sigCtx.lineTo(pos.x, pos.y);
+  sigCtx.stroke();
+  lastX = pos.x; lastY = pos.y;
+}
+function endDraw() { isDrawing = false; }
+
+sigCanvas.addEventListener('mousedown', startDraw);
+sigCanvas.addEventListener('mousemove', moveDraw);
+window.addEventListener('mouseup', endDraw);
+sigCanvas.addEventListener('touchstart', startDraw, { passive: false });
+sigCanvas.addEventListener('touchmove', moveDraw, { passive: false });
+sigCanvas.addEventListener('touchend', endDraw);
+
+function clearSignature() {
+  const rect = sigCanvas.parentElement.getBoundingClientRect();
+  sigCtx.clearRect(0, 0, rect.width, rect.height);
+  sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+  sigCtx.lineWidth = 2; sigCtx.strokeStyle = '#000';
+}
+
+// ============================================
+// ВАЛИДАЦИЯ
+// ============================================
+function validate() {
+  const nombre = document.getElementById('nombre').value.trim();
+  const fecha  = document.getElementById('fecha').value;
+  const cedula = document.getElementById('cedula').value.trim();
+  const errorEl = document.getElementById('error-msg');
+  
+  if (!nombre || !fecha || !cedula) {
+    errorEl.textContent = 'Complete todos los campos obligatorios.';
+    errorEl.style.display = 'block';
+    return null;
+  }
+  
+  const pixelBuffer = sigCtx.getImageData(0, 0, sigCanvas.width, sigCanvas.height).data;
+  const hasSignature = pixelBuffer.some(channel => channel !== 0);
+  if (!hasSignature) {
+    errorEl.textContent = 'Por favor realice la firma en el recuadro.';
+    errorEl.style.display = 'block';
+    return null;
+  }
+  
+  errorEl.style.display = 'none';
+  return { nombre, fecha, cedula };
+}
+
+// ============================================
+// ЗАГРУЗКА ШАБЛОНА
+// ============================================
+async function loadTemplate() {
+  const fileInput = document.getElementById('pdf-template');
+  if (fileInput.files && fileInput.files[0]) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(fileInput.files[0]);
+    });
+  } else {
+    try {
+      const response = await fetch(CONFIG.defaultTemplate);
+      if (!response.ok) throw new Error('Plantilla no encontrada');
+      return await response.arrayBuffer();
+    } catch (err) {
+      alert('No se encontró la plantilla PDF. Sube el archivo manualmente o coloca "Declaración.pdf" junto a este HTML.');
+      throw err;
+    }
+  }
+}
+
+// ============================================
+// ГЕНЕРАЦИЯ PDF + JPG
+// ============================================
+async function generateDocuments() {
+  const data = validate();
+  if (!data) return;
+  
+  const btn = document.querySelector('.btn-primary');
+  btn.textContent = 'Generando…'; btn.disabled = true;
+  
+  try {
+    templateBytes = await loadTemplate();
+    pdfBytes = await generatePDF(templateBytes, data);
+    jpgDataUrl = await generateJPG(templateBytes, data);
+    
+    const previewArea = document.getElementById('preview-area');
+    previewArea.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = jpgDataUrl; img.alt = 'Previsualización';
+    previewArea.appendChild(img);
+    
+    document.getElementById('form-section').classList.add('hidden');
+    document.getElementById('result-section').classList.remove('hidden');
+  } catch (err) {
+    console.error(err);
+    alert('Error al generar: ' + err.message);
+  } finally {
+    btn.textContent = 'Generar documento firmado'; btn.disabled = false;
+  }
+}
+
+// ============================================
+// ГЕНЕРАЦИЯ PDF (pdf-lib)
+// ============================================
+async function generatePDF(templateArrayBuffer, data) {
+  const { PDFDocument, StandardFonts, rgb } = PDFLib;
+  const pdfDoc = await PDFDocument.load(templateArrayBuffer);
+  const [firstPage] = pdfDoc.getPages();
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const black = rgb(CONFIG.color.r / 255, CONFIG.color.g / 255, CONFIG.color.b / 255);
+  
+  // Форматируем дату YYYY-MM-DD → DD/MM/YYYY
+  const [y, m, d] = data.fecha.split('-');
+  const fechaFormatted = `${d}/${m}/${y}`;
+  
+  // --- Верх ---
+  firstPage.drawText(fechaFormatted, {
+    x: CONFIG.textFields.fechaHeader.x,
+    y: CONFIG.textFields.fechaHeader.y,
+    size: CONFIG.textFields.fechaHeader.size,
+    font, color: black
+  });
+  
+  firstPage.drawText(data.nombre, {
+    x: CONFIG.textFields.nombre.x,
+    y: CONFIG.textFields.nombre.y,
+    size: CONFIG.textFields.nombre.size,
+    font, color: black
+  });
+  
+  firstPage.drawText(data.cedula, {
+    x: CONFIG.textFields.cedula.x,
+    y: CONFIG.textFields.cedula.y,
+    size: CONFIG.textFields.cedula.size,
+    font, color: black
+  });
+  
+  // --- Низ ---
+  firstPage.drawText(data.nombre, {
+    x: CONFIG.textFields.nombreFooter.x,
+    y: CONFIG.textFields.nombreFooter.y,
+    size: CONFIG.textFields.nombreFooter.size,
+    font, color: black
+  });
+  
+  firstPage.drawText(fechaFormatted, {
+    x: CONFIG.textFields.fechaFooter.x,
+    y: CONFIG.textFields.fechaFooter.y,
+    size: CONFIG.textFields.fechaFooter.size,
+    font, color: black
+  });
+  
+  // --- Подпись (PNG с прозрачностью) ---
+  const sigDataUrl = sigCanvas.toDataURL('image/png');
+  const sigImage = await pdfDoc.embedPng(sigDataUrl);
+  
+  firstPage.drawImage(sigImage, {
+    x: CONFIG.signature.x,
+    y: CONFIG.signature.y,
+    width: CONFIG.signature.width,
+    height: CONFIG.signature.height
+  });
+  
+  return await pdfDoc.save();
+}
+
+// ============================================
+// ГЕНЕРАЦИЯ JPG (pdf.js + наложение)
+// ============================================
+async function generateJPG(templateArrayBuffer, data) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  
+  const typedArray = new Uint8Array(templateArrayBuffer);
+  const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+  const page = await pdf.getPage(1);
+  
+  const scale = 2;
+  const viewport = page.getViewport({ scale });
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  
+  await page.render({ canvasContext: ctx, viewport }).promise;
+  
+  const pxPerPt = viewport.width / CONFIG.page.width;
+  ctx.fillStyle = '#000';
+  ctx.textBaseline = 'alphabetic';
+  
+  const [y, m, d] = data.fecha.split('-');
+  const fechaFormatted = `${d}/${m}/${y}`;
+  
+  function drawText(text, cfg) {
+    const fontSizePx = cfg.size * pxPerPt;
+    ctx.font = `${fontSizePx}px Arial, sans-serif`;
+    const x = cfg.x * pxPerPt;
+    const y = viewport.height - (cfg.y * pxPerPt);
+    ctx.fillText(text, x, y);
+  }
+  
+  // Верх
+  drawText(fechaFormatted, CONFIG.textFields.fechaHeader);
+  drawText(data.nombre, CONFIG.textFields.nombre);
+  drawText(data.cedula, CONFIG.textFields.cedula);
+  
+  // Низ
+  drawText(data.nombre, CONFIG.textFields.nombreFooter);
+  drawText(fechaFormatted, CONFIG.textFields.fechaFooter);
+  
+  // Подпись
+  const sigX = CONFIG.signature.x * pxPerPt;
+  const sigBottomY = viewport.height - (CONFIG.signature.y * pxPerPt);
+  const sigY = sigBottomY - (CONFIG.signature.height * pxPerPt);
+  const sigW = CONFIG.signature.width * pxPerPt;
+  const sigH = CONFIG.signature.height * pxPerPt;
+  ctx.drawImage(sigCanvas, sigX, sigY, sigW, sigH);
+  
+  return canvas.toDataURL('image/jpeg', 0.9);
+}
+
+// ============================================
+// СКАЧИВАНИЕ
+// ============================================
+function downloadPDF() {
+  if (!pdfBytes) return;
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `declaracion_ivss_${Date.now()}.pdf`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function downloadJPG() {
+  if (!jpgDataUrl) return;
+  const a = document.createElement('a');
+  a.href = jpgDataUrl;
+  a.download = `declaracion_ivss_${Date.now()}.jpg`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function resetForm() {
+  document.getElementById('nombre').value = '';
+  document.getElementById('fecha').value = '';
+  document.getElementById('cedula').value = '';
+  document.getElementById('pdf-template').value = '';
+  clearSignature();
+  document.getElementById('result-section').classList.add('hidden');
+  document.getElementById('form-section').classList.remove('hidden');
+  pdfBytes = null; jpgDataUrl = null; templateBytes = null;
+}
+</script>
+</body>
+</html>
